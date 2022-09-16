@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  api:
+    build: api
+    ports:
+      - 8086:8086
+    volumes:
+      - models:/mlruns
+
+  app:
+    build: app
+    ports:
+      - 8501:8501
+
+  train:
+    build: training
+    ports:
+      - 4200:4200
+    volumes:
+      - models:/mlruns
+
+  mlflow:
+    build: mlflow
+    ports:
+      - 5000:5000
+    volumes:
+      - models:/mlruns
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:latest
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./monitoring/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+      - ./monitoring/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
+volumes:
+  models:

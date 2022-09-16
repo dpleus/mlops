@@ -1,0 +1,7 @@
+prefect
+mlflow
+sklearn
+numpy
+pandas
+matplotlib
+

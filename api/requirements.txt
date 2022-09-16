@@ -1,0 +1,5 @@
+fastapi[all]
+prometheus_fastapi_instrumentator
+mlflow
+sklearn
+pandas
