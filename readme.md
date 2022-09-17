@@ -20,7 +20,7 @@ The individual services are packaged as docker containers and setup with docker 
 
 **Download repository from GitHub**
 
-`git clone `
+`git clone https://github.com/dpleus/mlops.git`
 
 **Start docker compose (from project folder)**
 
